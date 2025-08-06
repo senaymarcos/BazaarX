@@ -87,13 +87,13 @@ def download_single_stock(name, symbol, start_date, end_date, output_dir):
         >>> print(success)  # True or False
     """
     try:
-        logger.info(f"📈 Downloading data for {name} ({symbol})...")
+        logger.info(f" Downloading data for {name} ({symbol})...")
 
         # Download stock data
         df = yf.download(symbol, start=start_date, end=end_date, progress=False)
 
         if df.empty:
-            logger.warning(f"⚠️  No data found for {name} ({symbol})")
+            logger.warning(f"  No data found for {name} ({symbol})")
             return False
 
         # Create CSV file path
@@ -102,11 +102,11 @@ def download_single_stock(name, symbol, start_date, end_date, output_dir):
         # Save to CSV
         df.to_csv(csv_path)
 
-        logger.info(f"✅ Saved {len(df)} records to {csv_path}")
+        logger.info(f"Saved {len(df)} records to {csv_path}")
         return True
 
     except Exception as e:
-        logger.error(f"❌ Error downloading {name} ({symbol}): {str(e)}")
+        logger.error(f" Error downloading {name} ({symbol}): {str(e)}")
         return False
 
 
@@ -159,8 +159,8 @@ def download_saudi_stocks(tickers=None, start_date=None, end_date=None, output_d
     # Initialize results tracking
     results = {"successful": 0, "failed": 0, "total": len(tickers)}
 
-    logger.info(f"🚀 Starting download for {len(tickers)} stocks...")
-    logger.info(f"📅 Date range: {start_date} to {end_date}")
+    logger.info(f" Starting download for {len(tickers)} stocks...")
+    logger.info(f" Date range: {start_date} to {end_date}")
 
     # Download each stock
     for name, symbol in tickers.items():
@@ -173,9 +173,9 @@ def download_saudi_stocks(tickers=None, start_date=None, end_date=None, output_d
 
     # Print summary
     logger.info(f"\n Download Summary:")
-    logger.info(f"✅ Successful: {results['successful']}")
-    logger.info(f"❌ Failed: {results['failed']}")
-    logger.info(f"📁 Files saved to: {output_path}")
+    logger.info(f" Successful: {results['successful']}")
+    logger.info(f" Failed: {results['failed']}")
+    logger.info(f" Files saved to: {output_path}")
 
     return results
 
@@ -282,31 +282,31 @@ if __name__ == "__main__":
     print("=" * 50)
 
     # Main download operation
-    print("📥 Starting main download process...")
+    print(" Starting main download process...")
     results = download_saudi_stocks()
 
     # Display additional information
-    print(f"\n📈 Available stocks: {len(SAUDI_TICKERS)}")
-    print(f"🏢 Companies downloaded:")
+    print(f"\n Available stocks: {len(SAUDI_TICKERS)}")
+    print(f" Companies downloaded:")
     for name, symbol in SAUDI_TICKERS.items():
         print(f"   • {name.replace('_', ' ')} ({symbol})")
 
-    print(f"\n🎉 Main download completed!")
-    print(f"📁 Check 'data/raw/' folder for CSV files")
+    print(f"\n Main download completed!")
+    print(f" Check 'data/raw/' folder for CSV files")
 
     # Interactive option for recent data
     try:
-        response = input("\n🤔 Would you like to download recent 30-day data as well? (y/n): ")
+        response = input("\n Would you like to download recent 30-day data as well? (y/n): ")
         if response.lower() in ['y', 'yes']:
-            print("\n📅 Downloading last 30 days data...")
+            print("\n Downloading last 30 days data...")
             recent_results = download_custom_date_range(days_back=30)
-            print(f"✅ Recent data download completed!")
-            print(f"📊 Recent download results: {recent_results['successful']}/{recent_results['total']} successful")
+            print(f" Recent data download completed!")
+            print(f" Recent download results: {recent_results['successful']}/{recent_results['total']} successful")
     except KeyboardInterrupt:
-        print("\n👋 Download process interrupted by user.")
+        print("\n Download process interrupted by user.")
     except Exception as e:
         logger.error(f"Error in interactive section: {str(e)}")
 
-    print("\n✨ All operations completed!")
-    print("💡 Tip: You can also import this module in other scripts:")
+    print("\n All operations completed!")
+    print(" Tip: You can also import this module in other scripts:")
     print("   from saudi_data_downloader import download_saudi_stocks")
